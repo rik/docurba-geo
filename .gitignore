@@ -1,4 +1,7 @@
 node_modules
 .vscode
+.DS_Store
 
-inputs/
+inputs/csv
+inputs/json
+inputs/xlsx
