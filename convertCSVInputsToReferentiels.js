@@ -8,14 +8,14 @@ import _ from 'lodash'
 
 import departements from './data/departements.json' assert {type: 'json'}
 
-import { createClient } from '@supabase/supabase-js'
+// import { createClient } from '@supabase/supabase-js'
 // DEV
 // 'https://drncrjteathtblggsgxi.supabase.co'
 // PROD
 // 'https://ixxbyuandbmplfnqtxyw.supabase.co'
-const supabase = createClient('https://ixxbyuandbmplfnqtxyw.supabase.co', process.env.SUPABASE_ADMIN_KEY, {
-  auth: { persistSession: false }
-})
+// const supabase = createClient('https://ixxbyuandbmplfnqtxyw.supabase.co', process.env.SUPABASE_ADMIN_KEY, {
+//   auth: { persistSession: false }
+// })
 
 function readJsonFilesInFolder(folderPath, cb) {
   try {
@@ -250,16 +250,16 @@ for (let index = 0; index < groupementsArray.length; index++) {
 
   if(group.competencePLU || group.competenceSCOT || EPCI_FISCALITE_PROPRE.includes(group.type)) {
     searchableGroupements.push(group)
-  } else {
-    const {data} = await supabase.from('procedures').select('id')
-      .in('status', ['opposable', 'en cours'])
-      .eq('collectivite_porteuse_id', group.code)
-      .eq('archived', false)
-      .limit(1)
+  // } else {
+    // const {data} = await supabase.from('procedures').select('id')
+    //   .in('status', ['opposable', 'en cours'])
+    //   .eq('collectivite_porteuse_id', group.code)
+    //    .eq('archived', false)
+    //   .limit(1)
 
-    if(data.length) {
-      searchableGroupements.push(group)
-    }
+    // if(data.length) {
+    //   searchableGroupements.push(group)
+    // }
   }
 
   console.log(`search filter ${index}/${groupementsArray.length}`)
