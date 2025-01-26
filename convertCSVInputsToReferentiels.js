@@ -13,7 +13,7 @@ import { createClient } from '@supabase/supabase-js'
 // 'https://drncrjteathtblggsgxi.supabase.co'
 // PROD
 // 'https://ixxbyuandbmplfnqtxyw.supabase.co'
-const supabase = createClient('https://ixxbyuandbmplfnqtxyw.supabase.co', 'SUPABASE ADMIN KEY', {
+const supabase = createClient('https://ixxbyuandbmplfnqtxyw.supabase.co', process.env.SUPABASE_ADMIN_KEY, {
   auth: { persistSession: false }
 })
 
