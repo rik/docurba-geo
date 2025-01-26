@@ -239,7 +239,7 @@ console.log(Object.keys(communesInseeMap).length)
 console.log(`Missing communes: ${nbMissingCommunes}, missing membres: ${missingMembres}`)
 
 const groupementsArray = _.map(groupementsMap, group => group)
-const communesArray = _.map(communesInseeMap, c => c)
+const communesArray = _.sortBy(_.map(communesInseeMap, c => c), 'code')
 
 const searchableGroupements = []
 
