@@ -51,7 +51,7 @@ function readJsonFilesInFolder(folderPath, cb) {
 }
 
 async function parseCsv(filePath) {
-  console.log(`Starting to parse: ${filePath}`); // Log when parsing starts
+  // console.log(`Starting to parse: ${filePath}`); // Log when parsing starts
 
   return await new Promise((resolve) => {
     const stream = createReadStream(filePath);
@@ -62,7 +62,7 @@ async function parseCsv(filePath) {
         console.log(`Error parsing ${filePath}:`, err); // Log parsing errors
       },
       complete: (result) => {
-        console.log(`Finished parsing: ${filePath}`); // Log when parsing finishes
+        // console.log(`Finished parsing: ${filePath}`); // Log when parsing finishes
         resolve(result);
       }
     });
@@ -78,7 +78,7 @@ async function parseInputs () {
     const { data: compositionCommunes } = await parseCsv('./inputs/csv/Composition_communale-Table 1.csv');
     const { data: compositionsEPT } = await parseCsv('./inputs/csv/Composition_communale-Table_EPT.csv');
 
-    console.timeEnd('CSV Parsing Time'); // Measure total time for all parsing operations
+    // console.timeEnd('CSV Parsing Time'); // Measure total time for all parsing operations
     console.log('All CSV files parsed successfully.', communeSiren.length, communes.length);
 
     return {communeSiren, communes, compositionCommunes, compositionsEPT}
@@ -234,11 +234,11 @@ readJsonFilesInFolder('./inputs/json', (membres) => {
   })
 })
 
-console.log(Object.keys(groupementsMap).length)
-console.log(Object.keys(communesInseeMap).length)
+console.log('groupementsMap', Object.keys(groupementsMap).length)
+console.log('communesInseeMap', Object.keys(communesInseeMap).length)
 console.log(`Missing communes: ${nbMissingCommunes}, missing membres: ${missingMembres}`)
 
-const groupementsArray = _.map(groupementsMap, group => group)
+const groupementsArray = _.sortBy(_.map(groupementsMap, group => group), 'code')
 const communesArray = _.sortBy(_.map(communesInseeMap, c => c), 'code')
 
 const searchableGroupements = []
@@ -262,7 +262,7 @@ for (let index = 0; index < groupementsArray.length; index++) {
     // }
   }
 
-  console.log(`search filter ${index}/${groupementsArray.length}`)
+  // console.log(`search filter ${index}/${groupementsArray.length}`)
 }
 
 console.log('searchableGroupements', searchableGroupements.length)
@@ -273,4 +273,4 @@ fs.writeFileSync('./output/communes_2024_map.json', JSON.stringify(communesInsee
 fs.writeFileSync('./output/groupements_2024.json', JSON.stringify(groupementsArray, null, 2))
 fs.writeFileSync('./output/communes_2024.json', JSON.stringify(communesArray, null, 2))
 
-fs.writeFileSync('./output/groupements_competents_2024.json', JSON.stringify(searchableGroupements, null, 2))
+fs.writeFileSync('./output/groupements_competents_2024.json', JSON.stringify(_.sortBy(searchableGroupements,'code'), null, 2))
