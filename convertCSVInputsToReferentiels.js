@@ -243,15 +243,18 @@ const communesArray = _.map(communesInseeMap, c => c)
 
 const searchableGroupements = []
 
+const EPCI_FISCALITE_PROPRE = ['CC', 'CA', 'CU', 'METRO', 'MET69']
+
 for (let index = 0; index < groupementsArray.length; index++) {
   const group = groupementsArray[index];
 
-  if(group.competencePLU || group.competenceSCOT) {
+  if(group.competencePLU || group.competenceSCOT || EPCI_FISCALITE_PROPRE.includes(group.type)) {
     searchableGroupements.push(group)
   } else {
     const {data} = await supabase.from('procedures').select('id')
       .in('status', ['opposable', 'en cours'])
       .eq('collectivite_porteuse_id', group.code)
+      .eq('archived', false)
       .limit(1)
 
     if(data.length) {
